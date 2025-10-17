@@ -24,7 +24,45 @@ The following environment variables must be set:
 - `JIRA_EMAIL` - Your full email address for Jira authentication
 - `JIRA_API_TOKEN` - Your Jira personal access token
 
-**Usage:**
+**Setup for Claude Code & Cursor:**
+
+This wrapper is designed to share a single container across multiple MCP clients (Claude Code, Cursor, etc.). The container runs in the background and each client connects to it via stdio transport.
+
+1. **Set environment variables** (add to your shell profile like `~/.zshrc` or `~/.bashrc`):
+   ```bash
+   export JIRA_EMAIL="your.email@example.com"
+   export JIRA_API_TOKEN="your-api-token-here"
+   ```
+
+2. **Configure Claude Code** (`~/.config/claude/claude_desktop_config.json`):
+   ```json
+   {
+     "mcpServers": {
+       "jira": {
+         "command": "/path/to/mcp_wrappers/confluence_jira_mcp_wrapper.sh"
+       }
+     }
+   }
+   ```
+
+3. **Configure Cursor** (Settings → Features → MCP or `.cursor/mcp.json`):
+   ```json
+   {
+     "mcpServers": {
+       "jira": {
+         "command": "/path/to/mcp_wrappers/confluence_jira_mcp_wrapper.sh"
+       }
+     }
+   }
+   ```
+
+**How it works:**
+- First client to connect will create and start the container
+- Subsequent clients connect to the same running container
+- No container restarts needed when switching between Claude Code and Cursor
+- Each client gets its own stdio connection to the container
+
+**Manual Usage:**
 
 ```bash
 export JIRA_EMAIL="your.email@example.com"
