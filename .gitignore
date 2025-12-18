@@ -1,0 +1,22 @@
+# Claude Code local settings
+.claude/settings.local.json
+.claude/plans/
+.claude/todos/
+.claude/debug/
+.claude/projects/
+.claude/file-history/
+.claude/shell-snapshots/
+.claude/statsig/
+.claude/.claude.json
+
+# macOS
+.DS_Store
+
+# Environment files with credentials
+.env
+.env.local
+*.pem
+*.key
+
+# Docker volumes (credentials are stored here)
+# These are managed separately, not in git
